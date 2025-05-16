@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Lottery DApp</title>
+    <link rel="stylesheet" href="style.css"> <!-- We'll create this later for basic styling -->
+</head>
+<body>
+    <h1>Decentralized Mini Lottery</h1>
+
+    <button id="connectWalletBtn">Connect Wallet</button>
+    <p>Connected Account: <span id="connectedAccount">Not Connected</span></p>
+    <p>Current Network: <span id="currentNetwork">N/A</span></p>
+    <hr>
+
+    <h2>Lottery Information</h2>
+    <p>Lottery ID: <span id="lotteryId">---</span></p>
+    <p>Ticket Price: <span id="ticketPrice">---</span> ETH</p>
+    <p>Status: <span id="lotteryStatus">---</span></p>
+    <p>Participants: <span id="participantsCount">---</span></p>
+    <p>Current Prize Pool: <span id="prizePool">---</span> ETH</p>
+    <p>Last Winner: <span id="lastWinner">---</span></p>
+    
+    <button id="refreshInfoBtn">Refresh Lottery Info</button>
+    <hr>
+
+    <h2>User Actions</h2>
+    <button id="enterLotteryBtn" disabled>Enter Lottery</button>
+    <p id="userMessage"></p>
+    <hr>
+
+    <h2>Owner Actions (Only visible to contract owner)</h2>
+    <div id="ownerSection" style="display: none;">
+        <label for="newStatus">Set Lottery Open: </label>
+        <select id="newStatus">
+            <option value="true">Open</option>
+            <option value="false">Closed</option>
+        </select>
+        <button id="setLotteryStatusBtn">Set Status</button>
+        <br><br>
+        <label for="newTicketPrice">New Ticket Price (ETH): </label>
+        <input type="text" id="newTicketPriceInput" placeholder="e.g., 0.01">
+        <button id="setTicketPriceBtn">Set New Price</button>
+        <br><br>
+        <button id="pickWinnerBtn">Pick Winner</button>
+    </div>
+    <p id="ownerMessage"></p>
+
+    <!-- Include ethers.js library -->
+    <!-- We are using a CDN link for simplicity. For a production app, you might bundle it. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js" integrity="sha512-bLwLr3lzJN1cvtbClBMhKDyaD0uocWmphiqO8v0w3/z/XqUwzkM00gZq7BV3dQS9mQu0rarZMTsxlcnIHszElA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+    <!-- Our JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>
