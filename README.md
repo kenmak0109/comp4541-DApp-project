@@ -26,8 +26,7 @@ This DApp demonstrates core concepts of smart contract development using Solidit
 ## Deployed Artifacts
 
 *   **Smart Contract Address (Sepolia):** 0x463ea0E962Eb65b3F6D9e32A19d4bD99c87c7995
-*   **Live Front-End Demonstration:** `https://[YourGitHubUsername].github.io/[YourGitHubRepoName]/`
-    *   *(You will get this URL after deploying to GitHub Pages in the next step)*
+*   **Live Front-End Demonstration:** https://kenmak0109.github.io/comp4541-DApp-project/
 
 ## Features
 
