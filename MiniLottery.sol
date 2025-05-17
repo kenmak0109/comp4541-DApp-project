@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v3.1.0/contracts/math/SafeMath.sol";
-// import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/drafts/RandomLib/randomness.sol";
-
-// If you are using Remix, it can usually fetch OpenZeppelin contracts automatically.
-// If you were in a local environment like Hardhat, you'd do `npm install @openzeppelin/contracts`
 // import "@openzeppelin/contracts/access/Ownable.sol";
-// import { Ownable } from "openzeppelin-contracts/contracts/access/Ownable.sol";
 import {Ownable} from "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
 
 contract MiniLottery is Ownable {
@@ -30,9 +24,6 @@ contract MiniLottery is Ownable {
         lotteryId = 1; // First lottery
     }
 
-    // --- We will add functions below this line ---
-        // --- Add this function INSIDE the MiniLottery contract, below the constructor ---
-
     /**
      * @notice Allows a user to enter the lottery.
      * @dev User must send ETH equal to the current ticketPrice.
@@ -40,15 +31,10 @@ contract MiniLottery is Ownable {
     function enterLottery() external payable {
         require(lotteryOpen, "Lottery is not currently open.");
         require(msg.value == ticketPrice, "Must send exact ticket price to enter.");
-        // Optional: Check if the participant is already in THIS round of lottery to prevent multiple entries
-        // For simplicity in a 12-hour project, we might allow multiple entries from the same address,
-        // as each entry is a separate chance. If you want to prevent it, you'd need a mapping.
 
         participants.push(msg.sender);
         emit LotteryEntered(lotteryId, msg.sender, msg.value);
     }
-
-        // --- Add these functions INSIDE the MiniLottery contract ---
 
     /**
      * @notice Toggles the lottery state (open/closed).
@@ -69,10 +55,7 @@ contract MiniLottery is Ownable {
         require(!lotteryOpen, "Cannot change price while lottery is open.");
         require(_newTicketPrice > 0, "Ticket price must be greater than zero.");
         ticketPrice = _newTicketPrice;
-        // Optionally, emit an event here if needed for front-end
     }
-
-        // --- Add this function INSIDE the MiniLottery contract ---
 
     /**
      * @notice Picks a winner from the participants.
@@ -91,28 +74,18 @@ contract MiniLottery is Ownable {
         uint256 prizeAmount = address(this).balance;
         require(prizeAmount > 0, "No prize to send.");
 
-        // --- State updates BEFORE transfer (Checks-Effects-Interactions) ---
         lastWinner = winner;
-        // Store the lotteryId for the event before incrementing
         uint256 currentLotteryIdForEvent = lotteryId; 
         
-        // Clear participants for the current round
         delete participants; 
-        lotteryOpen = false; // Close the lottery after picking a winner
-        lotteryId++;         // Increment lotteryId for the next round
+        lotteryOpen = false; 
+        lotteryId++;         
 
-        // Emit events AFTER state changes but BEFORE external call if possible,
-        // though for .transfer() re-entrancy is not an issue.
         emit WinnerPicked(currentLotteryIdForEvent, winner, prizeAmount);
         emit LotteryStateChanged(currentLotteryIdForEvent, false); 
 
-        // --- Send the ETH ---
-        // .transfer() will revert on failure. No boolean is returned.
         payable(winner).transfer(prizeAmount);
-        // No need for `require(sent, ...)` because .transfer() handles the revert.
     }
-
-        // --- Add these functions INSIDE the MiniLottery contract ---
 
     /**
      * @notice Gets the list of current participants.
